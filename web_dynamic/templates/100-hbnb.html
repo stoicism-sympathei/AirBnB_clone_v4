@@ -1,118 +1,116 @@
 <!DOCTYPE html>
-<HTML lang="en">
-  <HEAD>
+<html lang="en">
+  <head>
 
     <!-- HEAD -->
 
-    <META charset="utf-8">
-    <META name="viewport" content="width=device-width">
-    <TITLE>HolbertonBnB</TITLE>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Holberton AirBnB</title>
 
     <!-- FAVICON -->
 
-    <LINK rel="shortcut icon" href="{{ url_for('static', filename='images/icon.png') + '?' + cache_id }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/icon.png') }}">
 
     <!-- **********************
 	 CSS styles
 	 ********************** -->
 
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') + '?' + cache_id }}">
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') + '?' + cache_id }}">
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') + '?' + cache_id }}">
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') + '?' + cache_id }}">
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') + '?' + cache_id }}">
-    <LINK rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.css') + '?' + cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/4-common.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-header.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/3-footer.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/6-filters.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/8-places.css') }}?{{ cache_id }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/font-awesome.css') }}?{{ cache_id }}">
 
-    <!-- jQUERY -->
-    <SCRIPT src="https://code.jquery.com/jquery-3.2.1.min.js"></SCRIPT>
-    <SCRIPT src="{{ url_for('static', filename='scripts/100-hbnb.js') + '?' + cache_id }}"></SCRIPT>
-  </HEAD>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="static/scripts/100-hbnb.js?" defer></script>
+  </head>
 
   <!-- **********************
        BODY
        ********************** -->
 
-  <BODY>
+  <body>
 
     <!-- **********************
 	 HEADER
 	 ********************** -->
 
-    <HEADER>
-      <DIV id="api_status" class="available">
-      </DIV>
-    </HEADER>
-    <MAIN>
-      <DIV class="container">
+    <header>
+      <div id="api_status" style="position:absolute;right:30px;border-radius:40px;width:40px;height:40px;top:15px">
+      </div>
+    </header>
+    <main>
+      <div class="container">
+
+	<!-- **********************
+	     FILTERS
+	     ********************** -->
+
+	<section class="filters">
 
 	  <!-- **********************
-	       FILTERS
-	      ********************** -->
-
-	      <SECTION class="filters">
-
-	      <!-- **********************
-	            LOCATIONS
+	       LOCATIONS
 	       ********************** -->
 
-	        <DIV class="locations">
-	          <H3>States</H3>
-	          <H4>&nbsp;</H4>
-	          <UL class="popover">
-	          {% for state in states|sort(attribute='name') %}
-            <H2>
-              <INPUT type="checkbox" data-id="{{ state.id }}" data-name="{{ state.name }}">
-                {{ state.name }}
-              </INPUT>
-            </H2>
-	            <UL>
-		          {% for city in state.cities|sort(attribute='name') %}
-		            <LI>
-                  <INPUT type="checkbox" data-id="{{ city.id }}" data-name="{{ city.name }}">
-                    {{ city.name }}
-                  </INPUT>
-                </LI>
-		          {% endfor %}
-	            </UL>
-	          {% endfor %}
-	          </UL>
-	        </DIV>
+	  <div class="locations">
+	    <h3>States</h3>
+	    <h4>&nbsp;</h4>
+	    <ul class="popover">
+	      {% for state in states|dictsort %}
+	      <LI><div class="statename"><INPUT type="checkbox" data-id={{ state[1].id }} data-name="{{ state[0] }}"><h2>{{ state[0] }}</h2></div>
+		<UL>
+		  {% for city in state[1].cities|sort(attribute='name') %}
+		  <LI><INPUT type="checkbox" data-id={{ city.id }} data-name="{{ city.name }}">{{ city.name }}</LI>
+		  {% endfor %}
+		</UL>
+	      </LI>
+	      {% endfor %}
+	    </ul>
+	  </div>
 
-	      <!-- **********************
-	         AMENITIES
-	        ********************** -->
+	  <!-- **********************
+	       AMENITIES
+	       ********************** -->
 
-	        <DIV class="amenities">
-	          <H3>Amenities</H3>
-	          <H4>&nbsp;</H4>
-	          <UL class="popover">
-	          {% for amenity in amens|sort(attribute='name') %}
-	            <LI>
-                <INPUT type="checkbox" data-id="{{ amenity.id }}" data-name="{{ amenity.name }}">
-                  {{ amenity.name }}
-                </INPUT>
-              </LI>
-	          {% endfor %}
-	          </UL>
-	        </DIV>
+	  <div class="amenities">
+	    <h3>Amenities</h3>
+	    <h4>&nbsp;</h4>
+	    <ul class="popover">
+	      {% for amenity in amens|sort(attribute='name') %}
+	      <LI><INPUT type="checkbox" data-id={{ amenity.id }} data-name="{{ amenity.name }}">{{ amenity.name }}</LI>
+	      {% endfor %}
+	    </ul>
+	  </div>
 
-	      <!-- **********************
-	          SEARCH BUTTON
-	          ********************** -->
+	  <!-- **********************
+	       SEARCH BUTTON
+	       ********************** -->
 
-	        <BUTTON>Search</BUTTON>
-	      </SECTION>
+	  <button>Search</button>
+	</section>
 
-	      <SECTION class="places">
-	        <H1>Places</H1>
-	      </SECTION>
-      </DIV>
-    </MAIN>
+	<section class="places">
+	  <h1>Places</h1>
+
+	<!-- **********************
+	     BEGIN 1 PLACE
+	     ********************** -->
+
+	  {% for place in places|sort(attribute='name') %}
+
+	
+	  {% endfor %}
+
+	</section>
+      </div>
+    </main>
 
     <!-- FOOTER -->
 
-    <FOOTER>
+    <footer>
       Holberton School
-    </FOOTER>
-  </BODY>
-</HTML>
+    </footer>
+  </body>
+</html>
