@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css"
         href="{{ url_for('static', filename='styles/3-footer.css') }}?{{ cache_id }}" />
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="{{ url_for('static', filename='scripts/4-hbnb.js') }}?{{ cache_id }}"></script>
+    <script src="{{ url_for('static', filename='scripts/100-hbnb.js') }}?{{ cache_id }}"></script>
 </head>
 
 <body>
@@ -29,11 +29,15 @@
                 <ul class="popover">
                     {% for state in states %}
                     <li>
+                        <input type="checkbox" data-id="{{ state.id }}" data-name="{{ state.name }}" style="margin-left: 10px;">
                         <H2>{{ state.name }}</H2>
                         {% if state.cities %}
                         <ul>
                             {% for city in state.cities %}
-                            <li>{{ city.name }}</li>
+                            <li>
+                                <input type="checkbox" data-id="{{ city.id }}" data-name="{{ city.name }}" style="margin-left: 10px;">
+                                {{ city.name }}
+                            </li>
                             {% endfor %}
                         </ul>
                         {% endif %}
